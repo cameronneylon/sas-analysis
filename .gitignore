@@ -1,0 +1,6 @@
+*.pdb
+cryson/
+crysol/
+stuhrmann/
+*.pyc
+*.py~
