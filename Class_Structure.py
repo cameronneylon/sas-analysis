@@ -3,6 +3,8 @@ import os
 import os.path
 import atsasparse as parse
 import matplotlib.pyplot as plt
+import urllib2
+
 
 class Structure:
 
@@ -39,7 +41,18 @@ class Structure:
         os.chdir('..')
         return
 
+    def getPDB(self):
+        raw_input('What PDB code?  ', self.pdb)
+        pdbcode=(self.pdb+'.pdb')
+        pdbURL=('http://www.rcsb.org/pdb/files/'+pdbcode)
+        pdb = urllib2.urlopen(pdbURL)
+        pdbstring = pdb.read()
+        file = open(pdbcode, 'w') 
+        file.write(pdbstring)
+        file.close() 
 
+        
+        
     def runCryson(self, d2o=0.0):
         """Method for running crysol over the pdb"""
 
