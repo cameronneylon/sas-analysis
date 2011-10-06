@@ -42,7 +42,6 @@ class Structure:
         return
 
     def getPDB(self):
-        raw_input('What PDB code?  ', self.pdb)
         pdbcode=(self.pdb+'.pdb')
         pdbURL=('http://www.rcsb.org/pdb/files/'+pdbcode)
         pdb = urllib2.urlopen(pdbURL)
@@ -100,8 +99,12 @@ class Structure:
         if filename[(len(filename)-3):len(filename)] == 'log': return True
 
 
-p = Structure('3Q8L')
-s = p.runStuhrmann()
+
+whatPDB=raw_input('What PDB code?  ')
+q=Structure(whatPDB)
+q.getPDB()
+
+s = q.runStuhrmann()
 inv_cont=[]
 rg_sq=[]
 for point in s:
