@@ -5,7 +5,7 @@ import atsasparse as parse
 import matplotlib.pyplot as plt
 import urllib2
 
-
+#CLASS for deriving Sturhrmann plots
 class Structure:
 
     def __init__(self, pdb=None):
@@ -88,7 +88,7 @@ class Structure:
             f = open(('cryson/' + log), 'r')
             logfile = f.read()
             params = parse.parse(logfile)
-            rg = params['Rg_(_Atoms_-_Excluded_Volume_+_She']
+            rg = params['Rg_from_the_slope_of_net_intensity']
             contrast = params['Particle_contrast']
             stuhrvalues.append([contrast, rg])
 
@@ -99,7 +99,7 @@ class Structure:
         if filename[(len(filename)-3):len(filename)] == 'log': return True
 
 
-
+#MAIN PROGRAM CALLS
 whatPDB=raw_input('What PDB code?  ')
 q=Structure(whatPDB)
 q.getPDB()
@@ -113,20 +113,11 @@ for point in s:
 
 plt.plot(inv_cont, rg_sq, 'ro')
 plt.show()
-
+ 
 while True:
     pass
     
 
-
-#pdb=raw_input('pdb code?  ')
-#p=Structure(pdb)
-#p.runCrysol()
-#p.runCryson()
-#x=0.0
-#while x<=1.0:
-#    p.runCryson(x)
-#    x=x+0.1
 
         
         
