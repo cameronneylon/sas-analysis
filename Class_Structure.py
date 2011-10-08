@@ -88,7 +88,7 @@ class Structure:
             f = open(('cryson/' + log), 'r')
             logfile = f.read()
             params = parse.parse(logfile)
-            rg = params['Rg_from_the_slope_of_net_intensity']
+            rg = params['Rg_(_Atoms_-_Excluded_Volume_+_She']
             contrast = params['Particle_contrast']
             stuhrvalues.append([contrast, rg])
 
