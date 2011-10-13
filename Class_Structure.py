@@ -15,9 +15,9 @@ class Structure:
         self.pdbpath = self.pdb + '.pdb'
         self.structurerootpath = os.getcwd()
         
-        self.initDir('crysol')
-        self.initDir('cryson')
-        self.initDir('stuhrmann')
+        self.initDir('crysol'+self.pdb)
+        self.initDir('cryson'+self.pdb)
+        self.initDir('stuhrmann'+self.pdb)
 
     def initDir(self, dirname):
         if os.path.exists(dirname) and os.path.isdir(dirname):
@@ -113,9 +113,36 @@ for point in s:
     inv_cont.append(1/point[0])
     rg_sq.append(point[1]**2)
 
-plt.plot(inv_cont, rg_sq, 'ro')
-plt.show()
+#plt.plot(inv_cont, rg_sq, 'ro')
+#plt.show()
  
+#Regression analysis on plotted data
+from scipy import linspace, polyval, polyfit, sqrt, stats, randn
+from pylab import plot, title, show , legend
+
+n=inv_cont
+t=rg_sq
+    #Linear regressison -polyfit - polyfit can be used other orders polys
+(ar,br,cr)=polyfit(t,n,2)
+xr=polyval([ar,br,cr],t)
+    #compute the mean square error
+err=sqrt(sum((xr-n)**2)/n)
+print('Linear regression using polyfit')
+#print('parameters: a=%.2f b=%.2f \nregression: a=%.2f b=%.2f, ms error= %.3f' % (a,b,ar,br,err))
+    #matplotlib ploting
+title('Linear Regression Example')
+plot(n,t)
+plot(xr,t,'r.-')
+legend(['original', 'regression'])
+show()
+    #Linear regression using stats.linregress
+(a_s,b_s,r,tt,stderr)=stats.linregress(t,n)
+print('Linear regression using stats.linregress')
+print('parameters: a=%.2f b=%.2f \nregression: a=%.2f b=%.2f, std error= %.3f' % (a,b,a_s,b_s,stderr))
+
+
+
+
 while True:
     pass
     
