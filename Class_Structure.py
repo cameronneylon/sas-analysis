@@ -72,8 +72,11 @@ class Structure:
         """Generating Data for a Sturhmann Plot, defaults to 10 points"""
 
         if contrasts == []: 
-            for contrast in range(11):
-                contrasts.append(float(contrast)/10)
+            c=raw_input('Number of Constrasts   ')        
+            d=int(c)
+            e=d+1
+            for contrast in range(e):
+                contrasts.append(float(contrast)/d)
     
 
         for contrast in contrasts:
@@ -91,7 +94,6 @@ class Structure:
             rg = params['Rg_from_the_slope_of_net_intensity']
             contrast = params['Particle_contrast']
             stuhrvalues.append([contrast, rg])
-
         return stuhrvalues
         
 
