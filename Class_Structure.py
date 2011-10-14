@@ -127,7 +127,7 @@ t=rg_sq
 
 #Define function for sorting the values into consecutive order for the Stuhrmann plots
 def cmp(a,b): 
-    return int(100*a[0]-100*b[0])
+    return int(1000*a[0]-1000*b[0])
 
 #Take calculated Stuhrvalues and order them according to increasing inverse contrast
 newlist =[]
@@ -141,12 +141,13 @@ for j in range(e):
     n[j] = newlist[j][0]
     t[j] = newlist[j][1]
 
-print(n[j],t[j])
+print(n,t)
 
 #Linear regressison and plotting
 xdata = n
 ydata = t
 polycoeffs = polyfit(xdata, ydata, 2)
+yfit = polyval(polycoeffs, xdata)
 print polycoeffs
 
 #compute the mean square error
