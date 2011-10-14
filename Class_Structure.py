@@ -114,19 +114,22 @@ for point in s:
     inv_cont.append(1/point[0])
     rg_sq.append(point[1]**2)
 
-#plt.plot(inv_cont, rg_sq, 'ro')
-#plt.show()
 
-#Define function for sorting the values into consecutive order for the Stuhrmann plots
-def cmp(a,b): 
-   return int(100*a[0]-b[0]) 
+
 
 #Regression analysis on plotted data
 from scipy import linspace, polyval, polyfit, sqrt, stats, randn
 from pylab import plot, title, show , legend
 
-t=inv_cont
-n=rg_sq
+#Assign n and t to the inverse contrast and Rg**2 values
+n=inv_cont
+t=rg_sq
+
+#Define function for sorting the values into consecutive order for the Stuhrmann plots
+def cmp(a,b): 
+    return int(100*a[0]-100*b[0])
+
+#Take calculated Stuhrvalues and order them according to increasing inverse contrast
 newlist =[]
 for j in range(e):
     newlist.append([n[j],t[j]])
@@ -138,37 +141,26 @@ for j in range(e):
     n[j] = newlist[j][0]
     t[j] = newlist[j][1]
 
-print(n,t)
+print(n[j],t[j])
 
-    #Linear regressison -polyfit - polyfit can be used other orders polys
+#Linear regressison and plotting
 xdata = n
 ydata = t
-polycoeffs = scipy.polyfit(xdata, ydata, 1)
+polycoeffs = polyfit(xdata, ydata, 2)
 print polycoeffs
 
-yfit = scipy.polyval(polycoeffs, xdata)
+#compute the mean square error
+err=sqrt(sum((yfit-ydata)**2)/e)
+print('Linear regression using polyfit')
+print err
+
+#plotting
+yfit = polyval(polycoeffs, xdata)
 title('Linear Regression Example')
-pylab.plot(xdata, ydata, 'k.')
-pylab.plot(xdata, yfit, 'r-')
+plot(xdata, ydata, 'k.')
+plot(xdata, yfit, 'r-')
 legend(['original', 'regression'])
 show()
-
-#(ar,br,cr)=polyfit(t,n,2)
-#xr=polyval([ar,br,cr],t)
-#print(xr)
-    #compute the mean square error
-err=sqrt(sum((yfit-ydata)**2)/ydata)
-print('Linear regression using polyfit')
-#print('parameters: a=%.2f b=%.2f \nregression: a=%.2f b=%.2f, ms error= %.3f' % (n,t,ar,br,cr,err))
-    #matplotlib ploting
-
-#plot(t,n,'ro')
-#plot(t,xr,'r.-')
-    #Linear regression using stats.linregress
-#(a_s,b_s,r,tt,stderr)=stats.linregress(n,t)
-#print('Linear regression using stats.linregress')
-#print('parameters: a=%.2f b=%.2f \nregression: a=%.2f b=%.2f, std error= %.3f' % (n,t,a_s,b_s,stderr))
-
 
 
 
