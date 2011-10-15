@@ -15,9 +15,9 @@ class Structure:
         self.pdbpath = self.pdb + '.pdb'
         self.structurerootpath = os.getcwd()
         
-        self.initDir('crysol'+self.pdb)
-        self.initDir('cryson'+self.pdb)
-        self.initDir('stuhrmann'+self.pdb)
+        self.initDir('crysol')#+self.pdb)
+        self.initDir('cryson')#+self.pdb)
+        self.initDir('stuhrmann')#+self.pdb)
 
     def initDir(self, dirname):
         if os.path.exists(dirname) and os.path.isdir(dirname):
@@ -155,12 +155,25 @@ print('Alpha:   ')
 print polycoeffs[1]
 print('Beta:    ')
 print polycoeffs[0]
-
-
+fitvals=whatPDB + '_Stuhrmann_plot_values'
+file = open(fitvals, 'w') 
+file.write(polycoeffs)
+file.close()
+        
+#Remove contents of Cryson directory
+import os 
+folder = 'cryson'
+for the_file in os.listdir(folder):
+    file_path = os.path.join(folder, the_file)
+    try:
+        if os.path.isfile(file_path):
+            os.unlink(file_path)
+    except Exception, g:
+        print g
 
 #compute the mean square error
 err=sqrt(sum((yfit-ydata)**2)/e)
-print('Mean Square Error')
+print('Root Mean Square Error')
 print err
 
 #plotting
