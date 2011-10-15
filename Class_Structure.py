@@ -141,18 +141,26 @@ for j in range(e):
     n[j] = newlist[j][0]
     t[j] = newlist[j][1]
 
-print(n,t)
+
 
 #Linear regressison and plotting
 xdata = n
 ydata = t
 polycoeffs = polyfit(xdata, ydata, 2)
 yfit = polyval(polycoeffs, xdata)
-print polycoeffs
+print('Polynomial coefficents: Beta, Alpha, Rc**2')
+print('Radius of gyration at infinite contrast') 
+print sqrt(polycoeffs[2])
+print('Alpha:   ')
+print polycoeffs[1]
+print('Beta:    ')
+print polycoeffs[0]
+
+
 
 #compute the mean square error
 err=sqrt(sum((yfit-ydata)**2)/e)
-print('Linear regression using polyfit')
+print('Mean Square Error')
 print err
 
 #plotting
