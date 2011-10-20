@@ -61,6 +61,10 @@ chainperd = Literal("Perdeuteration, chain [") + Word(alphas, max=1) + \
 # Parse geometric centre
 geomcenter = Literal("Geometric Center") + colon + \
                     real + real + real
+
+# Parse the 
+rgfromatomicstructure = Literal("olume + Shell ) "
+                                ) + filler + colon + real
                        
 # Parse output files
 outputfiles = Word(alphas) + Literal("saved to file").suppress() + \
@@ -74,6 +78,10 @@ def parse(text):
 
     for token, start, end in outputfiles.scanString(text):
         dict[token[0]] = token[1]
+
+    for token, start, end in rgfromatomicstructure.scanString(text):
+        print token, start, end
+        dict['Rg_from_atomic_structure'] = token[1]
 
     dict['perdeuteration'] = {}
     for token, start, end in chainperd.scanString(text):
