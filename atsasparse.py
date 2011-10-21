@@ -80,7 +80,6 @@ def parse(text):
         dict[token[0]] = token[1]
 
     for token, start, end in rgfromatomicstructure.scanString(text):
-        print token, start, end
         dict['Rg_from_atomic_structure'] = token[1]
 
     dict['perdeuteration'] = {}

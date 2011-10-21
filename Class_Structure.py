@@ -43,12 +43,15 @@ class Structure:
 
     def getPDB(self):
         pdbcode=(self.pdb+'.pdb')
-        pdbURL=('http://www.rcsb.org/pdb/files/'+pdbcode)
-        pdb = urllib2.urlopen(pdbURL)
-        pdbstring = pdb.read()
-        file = open(pdbcode, 'w') 
-        file.write(pdbstring)
-        file.close() 
+        if os.path.isfile(pdbcode):
+            return
+        else:
+            pdbURL=('http://www.rcsb.org/pdb/files/'+pdbcode)
+            pdb = urllib2.urlopen(pdbURL)
+            pdbstring = pdb.read()
+            file = open(pdbcode, 'w') 
+            file.write(pdbstring)
+            file.close() 
 
         
         
@@ -91,7 +94,7 @@ class Structure:
             f = open(('cryson/' + log), 'r')
             logfile = f.read()
             params = parse.parse(logfile)
-            rg = params['olume_+_Shell_)_']
+            rg = params['Rg_from_atomic_structure']
             #rg = params['Rg_from_the_slope_of_net_intensity']
             contrast = params['Particle_contrast']
             stuhrvalues.append([contrast, rg])
@@ -138,9 +141,10 @@ for j in range(e):
 newlist.sort(cmp)
 
 for j in range(e):
-    n[j] = newlist[j][0]
-    t[j] = newlist[j][1]
-
+    if abs(newlist[j][0])<5.0:
+        n[j] = newlist[j][0]
+        t[j] = newlist[j][1]
+    
 
 
 #Linear regressison and plotting
@@ -157,7 +161,7 @@ print('Beta:    ')
 print polycoeffs[0]
 fitvals=whatPDB + '_Stuhrmann_plot_values'
 file = open(fitvals, 'w') 
-file.write(polycoeffs)
+file.write(str(polycoeffs))
 file.close()
         
 #Remove contents of Cryson directory
